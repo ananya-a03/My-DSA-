@@ -1,0 +1,138 @@
+Subarray with sum 0
+
+Given an array of integers. 
+Find if there is a subarray (of size at-least one) with 0 sum.
+You just need to return true/false depending upon whether 
+there is a subarray present with 0-sum or not. 
+Printing will be taken care by the driver code.
+
+Example 1:
+n = 5
+arr = {4, 2, -3, 1, 6 }
+
+output: yes
+
+Explanation:
+2, -3, 1 is the subarray with sum 0.
+
+
+
+
+Example 2:
+n = 5
+arr = {4, 2, 0, 1, 6}
+
+output: yes
+
+Explanation:
+0 is one of the element in the array so there exists a subarray
+with sum 0.
+
+
+Example 3:
+n = 8
+arr = {-7, -6, -3, 10, 10, -10, -7, -4}
+
+ouput: yes
+
+
+
+Naive approach O(n^2):
+
+class Solution{
+    public:
+    //Complete this function
+    //Function to check whether there is a subarray present with 0-sum or not.
+    bool subArrayExists(int arr[], int n)
+    {
+        //Your code here
+        int sum = 0;
+        
+     
+        
+        for(int i = 0; i<n; i++)
+        {
+            // sum = sum + arr[i];
+            
+            // if(sum == 0 || arr[i] == 0) return true;
+            
+            for(int j = i; j<n; j++)
+            {
+                sum = sum + arr[j];
+                
+                if(sum == 0 || arr[i] == 0) return true;
+            }
+            
+            sum = 0;
+        }
+    
+        return false;
+    }
+};
+
+
+Optimized approach O(n):
+
+class Solution{
+    public:
+    //Complete this function
+    //Function to check whether there is a subarray present with 0-sum or not.
+    bool subArrayExists(int arr[], int n)
+    {
+        //Your code here
+        unordered_map<int,int> mp;
+        
+        int sum = 0;
+        
+        for(int i=0; i<n; i++)
+        {
+            sum += arr[i];
+            if(sum == 0 || mp[sum] > 0) return true;
+            mp[sum]++;
+        }
+        return false;
+    }
+};
+
+Code Explanation:
+if(map.find(sum) != map.end()){
+    return true; 
+} 
+map[sum]++;
+
+Here, the code is part of a function that checks 
+whether there exists a subarray with a sum of zero. 
+It uses a hash map (unordered_map) to keep track of the 
+running sum encountered so far.
+
+
+map.find(sum) != map.end(): 
+This condition checks if the current sum (sum) 
+is already present in the hash map. If it is, 
+then it means that the same sum was encountered earlier 
+in the array. If this condition is true, the function 
+returns true, indicating that a subarray with a sum of zero has been found.
+
+
+map[sum]++: If the sum is not present in the hash map, 
+it adds the current sum to the map with a count of 1. 
+This is done to keep track of the running sum.
+
+
+Now, let's consider a dry run with an example:
+int arr[] = {4, 2, -3, 1, 6};
+int n = 5; 
+Iterate through the array:
+
+Iteration 1 (4): sum becomes 4. map is {4: 1}.
+Iteration 2 (2): sum becomes 6. map is {4: 1, 6: 1}.
+Iteration 3 (-3): sum becomes 3. map is {4: 1, 6: 1, 3: 1}.
+Iteration 4 (1): sum becomes 4. map is {4: 2, 6: 1, 3: 1}.
+Iteration 5 (6): sum becomes 10. map is {4: 2, 6: 2, 3: 1}.
+
+Now, at each step, it checks if the current sum is already present 
+in the hash map. In this example, when sum becomes 4 again (in the fifth iteration), 
+it finds that 4 is already in the map. Therefore, it returns true.
+
+So, the if condition if(map.find(sum) != map.end()) is triggered when a 
+repeated sum is encountered, indicating the presence of a subarray with a sum of zero.
