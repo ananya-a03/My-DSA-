@@ -1,0 +1,70 @@
+Minimum indexed character
+
+Given a string str and another string patt. 
+Find the minimum index of the character in str that is also present in patt.
+
+
+Example 1:
+
+Input:
+str = geeksforgeeks
+patt = set
+Output: 1
+Explanation: e is the character which is
+present in given str "geeksforgeeks"
+and is also present in patt "set". Minimum
+index of e is 1. 
+
+
+Example 2:
+
+Input:
+str = adcffaet
+patt = onkl
+Output: -1
+Explanation: There are none of the
+characters which is common in patt
+and str.
+
+Your Task:
+You only need to complete the function minIndexChar() that returns the index of answer in str or returns -1 in case no character of patt is present in str.
+
+
+Expected Time Complexity: O(N).
+Expected Auxiliary Space: O(Number of distinct characters).
+
+Code:
+class Solution
+{
+  public:
+    //Function to find the minimum indexed character.
+    int minIndexChar(string str, string patt)
+    {
+        // Your code here
+        
+        unordered_map<char, int> mp;
+        int index = INT_MAX;
+        int temp = -1;
+        for(int i = 0; i<str.length(); i++)
+        {
+            if(mp.find(str[i]) != mp.end()) continue;
+            
+            mp[str[i]] = i;
+        }
+        
+        for(int j = 0; j<patt.length(); j++)
+        {
+            if(mp.find(patt[j]) != mp.end())
+            {
+                temp = mp[patt[j]];
+                if(index > temp) index = temp;
+            }
+            
+        }
+        
+        if(temp == -1) return -1;
+        
+        if(index >= 0) return index;
+    
+    }
+};
