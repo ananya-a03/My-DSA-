@@ -1,0 +1,49 @@
+For two strings s and t, we say "t divides s" if and only if s = t + t + t + ... + t + t (i.e., t is concatenated with itself one or more times).
+
+Given two strings str1 and str2, return the largest string x such that x divides both str1 and str2.
+
+ 
+
+Example 1:
+
+Input: str1 = "ABCABC", str2 = "ABC"
+Output: "ABC"
+Example 2:
+
+Input: str1 = "ABABAB", str2 = "ABAB"
+Output: "AB"
+Example 3:
+
+Input: str1 = "LEET", str2 = "CODE"
+Output: ""
+ 
+
+
+code:
+class Solution {
+public:
+    string gcdOfStrings(string str1, string str2) {
+        
+        return (str1+str2 == str2+str1)? 
+        str1.substr(0, gcd(size(str1), size(str2))):"";
+    }
+};
+
+
+Approach
+
+-->str1+str2 == str2+str1 if and only if str1 and str2 have a gcd .
+
+-->E.g. str1=abcabc, str2=abc, 
+then str1+str2 = abcabcabc = str2+str1
+
+-->This(str1+str2==str2+str1) is a requirement for the strings to have a gcd. If one of them is NOT a common part then gcd is "".
+It means we will return empty string
+Proof:-str1 = mGCD, str2 = nGCD, str1 + str2 = (m + n)GCD = str2 + str1
+
+-->Both the strings are made of same substring added multiple times.
+
+-->Since they are multiples, next step is simply to find the gcd of the lengths of 2 strings e.g. gcd(6,3) = 3, (we can use gcd function to find that)and get the substring of length 3 from either str1 or str2.
+In c++ it will be str1.substr(0, gcd)
+
+
